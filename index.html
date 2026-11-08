@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinguaWorld</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+  color: #202b45;
+}
+
+header {
+  background: linear-gradient(120deg, #192e54, #4269ad);
+  color: white;
+  padding: 28px 6%;
+}
+
+header h1 { margin: 0; font-size: 32px; }
+header p { color: #e0e9ff; }
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main {
+  max-width: 1150px;
+  margin: auto;
+  padding: 25px 20px;
+}
+
+.hero, .panel {
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  margin-bottom: 25px;
+}
+
+.hero {
+  background: linear-gradient(120deg, #ffffff, #eaf0ff);
+}
+
+h2 { color: #294c91; }
+
+input, select {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px;
+  border: 1px solid #ccd5e5;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 17px;
+}
+
+.language-card {
+  background: white;
+  border: 1px solid #e1e7f2;
+  border-radius: 16px;
+  padding: 22px;
+  transition: .2s;
+}
+
+.language-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px #243b6515;
+}
+
+.flag { font-size: 38px; }
+
+.language-card h3 { color: #294c91; }
+
+.language-card p {
+  color: #65718a;
+  line-height: 1.5;
+}
+
+button {
+  background: #315bb1;
+  color: white;
+  border: 0;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover { background: #203f83; }
+
+.secondary {
+  background: #e9effb;
+  color: #294c91;
+}
+
+.levels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.level-card {
+  background: #f0f4fc;
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.level-card h3 { color: #294c91; }
+
+#coursePage { display: none; }
+
+#message {
+  color: #315bb1;
+  margin-top: 18px;
+  line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #758098;
+}
+
+@media(max-width:600px) {
+  header h1 { font-size: 26px; }
+  main { padding: 15px; }
+  .hero, .panel { padding: 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>LinguaWorld 🌍</h1>
+  <p>Изучай языки. Открывай мир. Развивай знания.</p>
+
+  <nav>
+    <a onclick="showCatalog()">Главная</a>
+    <a onclick="showCatalog()">Языки</a>
+    <a onclick="showMessage('Раздел «Культура» будет добавлен следующим этапом.')">Культура</a>
+    <a onclick="showMessage('Личный кабинет будет подключён следующим этапом.')">Мой профиль</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="catalogPage">
+
+  <section class="hero">
+    <h2>Добро пожаловать в LinguaWorld!</h2>
+    <p>
+      Изучай иностранные языки с помощью уроков,
+      упражнений, аудио, видео и практики общения.
+    </p>
+
+    <h3>Найди свой язык</h3>
+    <input
+      id="search"
+      type="search"
+      placeholder="Поиск языка..."
+      oninput="filterLanguages()"
+    >
+  </section>
+
+  <h2>Каталог языков</h2>
+  <p>Выбери язык, который хочешь изучать.</p>
+
+  <section class="grid" id="languageGrid"></section>
+
+</section>
+
+<section id="coursePage">
+
+  <div class="panel">
+    <button class="secondary" onclick="showCatalog()">
+      ← Вернуться к языкам
+    </button>
+
+    <h2 id="courseTitle">Название языка</h2>
+    <p id="courseDescription">
+      Твоя программа изучения языка.
+    </p>
+
+    <h3>Выбери уровень обучения</h3>
+
+    <section class="levels">
+      <div class="level-card">
+        <h3>A1</h3>
+        <p>Начальный</p>
+        <button onclick="selectLevel('A1')">Открыть</button>
+      </div>
+
+      <div class="level-card">
+        <h3>A2</h3>
+        <p>Базовый</p>
+        <button onclick="selectLevel('A2')">Открыть</button>
+      </div>
+
+      <div class="level-card">
+        <h3>B1</h3>
+        <p>Средний</p>
+        <button onclick="selectLevel('B1')">Открыть</button>
+      </div>
+
+      <div class="level-card">
+        <h3>B2</h3>
+        <p>Выше среднего</p>
+        <button onclick="selectLevel('B2')">Открыть</button>
+      </div>
+
+      <div class="level-card">
+        <h3>C1</h3>
+        <p>Продвинутый</p>
+        <button onclick="selectLevel('C1')">Открыть</button>
+      </div>
+
+      <div class="level-card">
+        <h3>C2</h3>
+        <p>Свободное владение</p>
+        <button onclick="selectLevel('C2')">Открыть</button>
+      </div>
+    </section>
+
+    <div id="levelMessage"></div>
+  </div>
+
+</section>
+
+<p id="message"></p>
+
+</main>
+
+<footer>
+  LinguaWorld © 2026
+  <br>
+  Образование без границ.
+</footer>
+
+<script>
+
+const languages = [
+  {name:"English — American", flag:"🇺🇸", description:"Американский английский."},
+  {name:"English — British", flag:"🇬🇧", description:"Британский английский."},
+  {name:"Кыргызский", flag:"🇰🇬", description:"Кыргыз тили."},
+  {name:"Турецкий", flag:"🇹🇷", description:"Турецкий язык."},
+  {name:"Немецкий", flag:"🇩🇪", description:"Немецкий язык."},
+  {name:"Французский", flag:"🇫🇷", description:"Французский язык."},
+  {name:"Испанский", flag:"🇪🇸", description:"Испанский язык."},
+  {name:"Итальянский", flag:"🇮🇹", description:"Итальянский язык."},
+  {name:"Португальский", flag:"🇵🇹", description:"Португальский язык."},
+  {name:"Болгарский", flag:"🇧🇬", description:"Български език."},
+  {name:"Японский", flag:"🇯🇵", description:"Японский язык."},
+  {name:"Корейский", flag:"🇰🇷", description:"Корейский язык."},
+  {name:"Китайский (мандаринский)", flag:"🇨🇳", description:"Мандаринский китайский."},
+  {name:"Арабский", flag:"🌍", description:"Современный литературный арабский."},
+  
+  {name:"Польский", flag:"🇵🇱", description:"Польский язык."},
+  {name:"Греческий", flag:"🇬🇷", description:"Греческий язык."},
+  {name:"Тайский", flag:"🇹🇭", description:"Тайский язык."}
+];
+
+let selectedLanguage = "";
+
+function renderLanguages(list) {
+  const grid = document.getElementById("languageGrid");
+  grid.innerHTML = "";
+
+  list.forEach(language => {
+    const card = document.createElement("div");
+    card.className = "language-card";
+
+    const flag = document.createElement("div");
+    flag.className = "flag";
+    flag.textContent = language.flag;
+
+    const title = document.createElement("h3");
+    title.textContent = language.name;
+
+    const description = document.createElement("p");
+    description.textContent = language.description;
+
+    const button = document.createElement("button");
+    button.textContent = "Изучать";
+    button.onclick = () => openLanguage(language.name);
+
+    card.append(flag, title, description, button);
+    grid.appendChild(card);
+  });
+}
+
+function filterLanguages() {
+  const query = document.getElementById("search").value.toLowerCase();
+
+  const filtered = languages.filter(language =>
+    language.name.toLowerCase().includes(query)
+  );
+
+  renderLanguages(filtered);
+}
+
+function openLanguage(name) {
+  selectedLanguage = name;
+
+  document.getElementById("catalogPage").style.display = "none";
+  document.getElementById("coursePage").style.display = "block";
+
+  document.getElementById("courseTitle").textContent = name;
+  document.getElementById("courseDescription").textContent =
+    "Выбери уровень и начни изучение языка " + name + ".";
+
+  document.getElementById("levelMessage").textContent = "";
+  document.getElementById("message").textContent = "";
+
+  window.scrollTo(0, 0);
+}
+
+function selectLevel(level) {
+  document.getElementById("levelMessage").textContent =
+    "Выбран язык: " + selectedLanguage +
+    ". Уровень: " + level +
+    ". Содержание уроков будет добавлено следующим этапом.";
+}
+
+function showCatalog() {
+  document.getElementById("catalogPage").style.display = "block";
+  document.getElementById("coursePage").style.display = "none";
+  document.getElementById("message").textContent = "";
+  window.scrollTo(0, 0);
+}
+
+function showMessage(message) {
+  document.getElementById("message").textContent = message;
+}
+
+renderLanguages(languages);
+
+</script>
+
+</body>
+</html>
